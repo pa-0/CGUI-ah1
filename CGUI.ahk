@@ -1395,9 +1395,9 @@ CGUI_ClientToWin(hwnd, ByRef x, ByRef y)
     x := NumGet(pt, 0, "int") - wx
     y := NumGet(pt, 4, "int") - wy
 }
-#include gdip.ahk
-#include CControl.ahk
-#include CFileDialog.ahk
-#include CFolderDialog.ahk
-#include CEnumerator.ahk
-#include CMenu.ahk
+#include %A_LineFile%\..\gdip.ahk
+#include %A_LineFile%\..\CControl.ahk
+#include %A_LineFile%\..\CFileDialog.ahk
+#include %A_LineFile%\..\CFolderDialog.ahk
+#include %A_LineFile%\..\CEnumerator.ahk
+#include %A_LineFile%\..\CMenu.ahk

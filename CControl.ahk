@@ -1,5 +1,5 @@
-#include EventHandler.ahk
-#include Delegate.ahk
+#include %A_LineFile%\..\EventHandler.ahk
+#include %A_LineFile%\..\Delegate.ahk
 /*
 Class: CControl
 Basic control class from which all controls extend.
@@ -710,19 +710,19 @@ Class CControl ;Never created directly
 	}
 }
 
-#include CTextControl.ahk
-#include CEditControl.ahk
-#include CButtonControl.ahk
-#include CCheckboxControl.ahk
-#include CChoiceControl.ahk
-#include CListViewControl.ahk
-#include CLinkControl.ahk
-#include CPictureControl.ahk
-#include CGroupBoxControl.ahk
-#include CStatusBarControl.ahk
-#include CTreeViewControl.ahk
-#include CTabControl.ahk
-#include CProgressControl.ahk
-#include CSliderControl.ahk
-#include CHotkeyControl.ahk
-#include CActiveXControl.ahk
+#include %A_LineFile%\..\CTextControl.ahk
+#include %A_LineFile%\..\CEditControl.ahk
+#include %A_LineFile%\..\CButtonControl.ahk
+#include %A_LineFile%\..\CCheckboxControl.ahk
+#include %A_LineFile%\..\CChoiceControl.ahk
+#include %A_LineFile%\..\CListViewControl.ahk
+#include %A_LineFile%\..\CLinkControl.ahk
+#include %A_LineFile%\..\CPictureControl.ahk
+#include %A_LineFile%\..\CGroupBoxControl.ahk
+#include %A_LineFile%\..\CStatusBarControl.ahk
+#include %A_LineFile%\..\CTreeViewControl.ahk
+#include %A_LineFile%\..\CTabControl.ahk
+#include %A_LineFile%\..\CProgressControl.ahk
+#include %A_LineFile%\..\CSliderControl.ahk
+#include %A_LineFile%\..\CHotkeyControl.ahk
+#include %A_LineFile%\..\CActiveXControl.ahk
