@@ -35,7 +35,7 @@ Class CCompoundControl
 				for index, Control in this.Container
 					Control.Y := Control.Y + DeltaY
 				return this.Boundaries.Y += DeltaY
-			}	
+			}
 		}
 		;Don't allow storing Width/Height keys. The implementing Compound object needs to handle these keys.
 		if Key in Width,Height

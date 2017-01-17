@@ -41,10 +41,10 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 	/*
 	Property: SelectedItem
 	The text of the selected item.
-	
+
 	Property: SelectedIndex
 	The index of the selected item.
-	
+
 	Property: Items
 	An array containing all items. See <CChoiceControl.CItems>.
 	*/
@@ -202,18 +202,18 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: SelectionChanged(SelectedItem)
 	Invoked when the selection was changed.
 
@@ -244,11 +244,11 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 			this._.GUINum := GUINum
 			this._.hwnd := hwnd
 		}
-		
+
 		/*
 		Property: 1,2,3,4,...
 		Individual items can be accessed by their index.
-		
+
 		Property: Count
 		The number of items in this control.
 		*/
@@ -264,11 +264,11 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 			if Name is Integer
 				return Value
 		}
-		
+
 		/*
 		Function: Add
 		Adds an item at the end of the list.
-		
+
 		Parameters:
 			Text - The text of the new item.
 			Position - The position at which the item will be inserted. Items with indices >= this value will be appended.
@@ -318,7 +318,7 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 		/*
 		Function: Delete
 		Deletes an item of the list of choices.
-		
+
 		Parameters:
 			IndexTextOrItem - The item which should be removed. This can either be an index, the text of the item or the item object stored in the Items array.
 		*/
@@ -399,7 +399,7 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 			/*
 			Function: AddControl
 			Adds a control to this item that will be visible only when this item is selected. The parameters correspond to the Add() function of CGUI.
-			
+
 			Parameters:
 				Type - The type of the control.
 				Name - The name of the control.
@@ -420,7 +420,7 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 			/*
 			Property: Selected
 			If true, the item is selected.
-			
+
 			Property: Text
 			The text of the list item.
 			*/

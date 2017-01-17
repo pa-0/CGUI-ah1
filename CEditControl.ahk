@@ -21,7 +21,7 @@ Class CEditControl Extends CControl
 	/*
 	Function: AddUpDown
 	Adds an UpDown control to this text field. This function needs to be called immediately after adding the edit control to the window.
-	
+
 	Parameters:
 		Min - The minimum value of the UpDown control.
 		Max - The maximum value of the UpDown control.
@@ -33,9 +33,9 @@ Class CEditControl Extends CControl
 		;If this edit control belongs to a tab, set the correct tab first and unset it afterwards
 		if(this.hParentControl && CGUI.GUIList[this.GUINum].Controls[this.hParentControl].Type = "Tab")
 			Gui, % this.GUINum ":Tab", % this.TabNumber, % CGUI.GUIList[this.GUINum].Controls[this.hParentControl]._.TabIndex
-		
+
 		Gui, % this.GUINum ":Add", UpDown, Range%Min%-%Max% hwndhUpDown, % this.Text
-		
+
 		if(this.hParentControl && CGUI.GUIList[this.GUINum].Controls[this.hParentControl].Type = "Tab")
 			Gui, % this.GUINum ":Tab"
 		hwnd := this.hwnd
@@ -72,11 +72,11 @@ Class CEditControl Extends CControl
 		;~ if(Value)
 			;~ return Value
 	}
-	
+
 	/*
 	Property: Min
 	If AddUpDown() has been called befored, the minimum value can be changed here.
-	
+
 	Property: Max
 	If AddUpDown() has been called befored, the maximum value can be changed here.
 	*/
@@ -99,22 +99,22 @@ Class CEditControl Extends CControl
 			}
 		}
 	}
-	
+
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: TextChanged()
 	Invoked when the text of the control is changed.
 	*/

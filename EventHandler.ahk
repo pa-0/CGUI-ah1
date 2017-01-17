@@ -1,11 +1,11 @@
-﻿class EventHandler
+class EventHandler
 {
    registeredHandlers := []
-   
+
    Register(handler){
       this.registeredHandlers.Insert(handler)
    }
-   
+
    UnRegister(handler){
       for k, h in this.registeredHandlers
       {
@@ -13,11 +13,11 @@
             this.registeredHandlers.Remove(k)
       }
    }
-   
+
    Clear(){
       registeredHandlers := []
    }
-   
+
    __Call(target, params*)
     {
       if(target == ""){
@@ -27,7 +27,7 @@
          }
       }
     }
-   
+
    __Set(name, value){
       if(name){
          if(name = "Handler"){

@@ -74,7 +74,7 @@ Class CCheckBoxControl Extends CControl ;This class is a radio control as well
 	/*
 	Function: AddControl
 	Adds a control to this control that will be visible/enabled only when this checkbox/radio button is checked. The parameters correspond to the Add() function of CGUI.
-	
+
 	Parameters:
 		Type - The type of the control.
 		Name - The name of the control.
@@ -127,7 +127,7 @@ Class CCheckBoxControl Extends CControl ;This class is a radio control as well
 					break
 			}
 		}
-		
+
 		hwnd := this.hwnd
 		;Go forward until the next group is found
 		while(true)
@@ -149,7 +149,7 @@ Class CCheckBoxControl Extends CControl ;This class is a radio control as well
 		}
 		return Group
 	}
-	
+
 	/*
 	Function: GetSelectedRadioButton
 	Returns the radio button control of the current group which is currently selected. Returns 0 if no button is selected.
@@ -166,18 +166,18 @@ Class CCheckBoxControl Extends CControl ;This class is a radio control as well
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: CheckedChanged()
 	Invoked when the checkbox/radio value changes.
 	*/

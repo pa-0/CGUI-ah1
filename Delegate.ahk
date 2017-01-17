@@ -1,7 +1,7 @@
 /*****************************************************
 Delegate Class
 
-A delegate is a extended Method Reference, as it stores the 
+A delegate is a extended Method Reference, as it stores the
 Method AND the instance where it should be called.
 ******************************************************
 */
@@ -9,7 +9,7 @@ class Delegate
 {
    Reference := 0
    MethodName := ""
-   
+
       __Call(target, params*)
     {
       if(target == ""){
@@ -23,14 +23,14 @@ class Delegate
             msgbox, 16, error, Can't find Invocation Target
       }
     }
-   
+
    /*
    Creates a new Delegate
    new Delegate("MyMethod")
    new Delegate(obj, "MyMemberMethod")
-   
+
    */
-   __New(args*){      
+   __New(args*){
       i := 0
       for each, a in args
          i++
