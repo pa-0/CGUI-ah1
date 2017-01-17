@@ -17,14 +17,14 @@ Class CProgressControl Extends CControl
 		this._.Insert("Min", 0)
 		this._.Insert("Max", 100)
 	}
-	
+
 	/*
 	Property: Value
 	The Value of the progress indicator. Relative offsets are possible by adding a sign when assigning it, i.e. Progress.Value := "+10". Progress.Value += 10 is also possible but less efficient.
-	
+
 	Property: Min
 	The minimum value of the progress indicator.
-	
+
 	Property: Max
 	The maximum value of the progress indicator.
 	*/

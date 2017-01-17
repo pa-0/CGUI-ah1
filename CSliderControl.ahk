@@ -9,7 +9,7 @@ Class CSliderControl Extends CControl
 	static registration := CGUI.RegisterControl("Slider", CSliderControl)
 
 	SliderMoved := new EventHandler()
-	
+
 	__New(Name, Options, Text, GUINum)
 	{
 		Base.__New(Name, Options, Text, GUINum)
@@ -22,14 +22,14 @@ Class CSliderControl Extends CControl
 		; this._.Insert("Messages", {0x004E : "Notify"}) ;This control uses WM_NOTIFY with NM_SETFOCUS and NM_KILLFOCUS
 		this._.Insert("Events", ["SliderMoved"])
 	}
-	
+
 	/*
 	Property: Value
 	The value of the Slider control. Relative offsets are possible by adding a sign when assigning it, i.e. Slider.Value := "+10". Slider.Value += 10 is also possible but less efficient.
-	
+
 	Property: Min
 	The minimum value of the Slider control.
-	
+
 	Property: Max
 	The maximum value of the Slider control.
 	*/
@@ -112,7 +112,7 @@ Class CSliderControl Extends CControl
 				return Value
 		}
 	}
-	
+
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
@@ -123,7 +123,7 @@ Class CSliderControl Extends CControl
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: SliderMoved()
 	Invoked when the user clicked on the control. This control does not implement all the advanced Slider events yet. Should be easy to implement though if there is any demand.
 	*/

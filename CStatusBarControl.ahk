@@ -12,7 +12,7 @@ Class CStatusBarControl Extends CControl
 	DoubleClick := new EventHandler()
 	RightClick := new EventHandler()
 	DoubleRightClick := new EventHandler()
-	
+
 	__New(Name, Options, Text, GUINum)
 	{
 		base.__New(Name, Options, Text, GUINum)
@@ -30,7 +30,7 @@ Class CStatusBarControl Extends CControl
 	/*
 	Property: Parts
 	An array of status bar parts/segments. See <CStatusBarControl.CParts>
-	
+
 	Property: Text
 	The text of the first part.
 	*/
@@ -104,7 +104,7 @@ Class CStatusBarControl Extends CControl
 		for index, Part in this._.Parts
 			if(index < this._.Parts._.MaxIndex()) ;Insert all but the last one
 				Widths.Insert(Part.Width ? Part.Width : 50)
-		
+
 		Gui, % this.GUINum ":Default"
 		SB_SetParts()
 		SB_SetParts(Widths*)
@@ -115,7 +115,7 @@ Class CStatusBarControl Extends CControl
 				SB_SetIcon(Part.Icon, Part.IconNumber, index)
 		}
 	}
-	
+
 	/*
 	Class: CStatusBarControl.CParts
 	An array of StatusBar parts/segments.
@@ -180,7 +180,7 @@ Class CStatusBarControl Extends CControl
 		/*
 		Function: Add
 		Adds a part.
-		
+
 		Parameters:
 			Text - The text of the part.
 			PartNumber - The position at which the new part will appear.
@@ -198,11 +198,11 @@ Class CStatusBarControl Extends CControl
 			Control := CGUI.GUIList[this.GUINum].Controls[this.hwnd]
 			Control.RebuildStatusBar()
 		}
-		
+
 		/*
 		Function: Remove
 		Removes a part.
-		
+
 		Parameters:
 			PartNumber - The index of the part which should be removed.
 		*/
@@ -215,7 +215,7 @@ Class CStatusBarControl Extends CControl
 				Control.RebuildStatusBar()
 			}
 		}
-		
+
 		/*
 		Class: CStatusBarControl.CParts.CPart
 		A single part object.
@@ -237,19 +237,19 @@ Class CStatusBarControl Extends CControl
 			/*
 			Property: Text
 			The text of this part.
-			
+
 			Property: PartNumber
 			The index of this part.
-			
+
 			Property: Width
 			The width of this part.
-			
+
 			Property: Style
 			The style of this part. See AHK docs.
-			
+
 			Property: Icon
 			The path to the icon file assigned to this part.
-			
+
 			Property: IconNumber
 			The index of the icon in a multi-icon file.
 			*/
@@ -298,27 +298,27 @@ Class CStatusBarControl Extends CControl
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: Click(PartIndex)
 	Invoked when the user clicked on the control.
-	
+
 	Event: DoubleClick(PartIndex)
 	Invoked when the user double-clicked on the control.
-	
+
 	Event: RightClick(PartIndex)
 	Invoked when the user right-clicked on the control.
-	
+
 	Event: DoubleRightClick(PartIndex)
 	Invoked when the user double-right-clicked on the control.
 	*/

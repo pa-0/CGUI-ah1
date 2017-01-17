@@ -12,7 +12,7 @@ Class CTabControl Extends CControl
 	DoubleClick := new EventHandler()
 	RightClick := new EventHandler()
 	DoubleRightClick := new EventHandler()
-	
+
 	__New(Name, Options, Text, GUINum)
 	{
 		base.__New(Name, Options, Text, GUINum)
@@ -23,7 +23,7 @@ Class CTabControl Extends CControl
 		CGUI.GUIList[this.GUINum].TabCount := CGUI.GUIList[this.GUINum].TabCount ? CGUI.GUIList[this.GUINum].TabCount + 1 : 1 ;Increase count of tabs in this GUI, required for GUI, Tab command
 		this._.Insert("TabIndex", CGUI.GUIList[this.GUINum].TabCount)
 	}
-	
+
 	PostCreate()
 	{
 		Base.PostCreate()
@@ -32,20 +32,20 @@ Class CTabControl Extends CControl
 		this.Type := "Tab" ;Fix tab type value
 		this._.Insert("ImageListManager", new this.CImageListManager(this.GUINum, this.hwnd))
 		this._.Tabs := new this.CTabs(this.GUINum, this.hwnd)
-		
+
 		;Add Tabs
 		this.Tabs.Add(this.Content)
 	}
 	/*
 	Property: Tabs
 	A list of all tabs. Each tab contains a list of controls that belong to it. The returned object is of type <CTabControl.CTabs>
-	
+
 	Property: Text
 	The text of the first tab.
-	
+
 	Property: SelectedItem
 	The selected tab item.
-	
+
 	Property: SelectedIndex
 	The index of the selected tab item.
 	*/
@@ -112,27 +112,27 @@ Class CTabControl Extends CControl
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: Click(TabItem)
 	Invoked when the user clicked on the control.
-	
+
 	Event: DoubleClick(TabItem)
 	Invoked when the user double-clicked on the control.
-	
+
 	Event: RightClick(TabItem)
 	Invoked when the user right-clicked on the control.
-	
+
 	Event: DoubleRightClick(TabItem)
 	Invoked when the user double-right-clicked on the control.
 	*/
@@ -204,14 +204,14 @@ Class CTabControl Extends CControl
 				}
 			}
 		}
-		
+
 		/*
 		Function: Add
 		Adds a tab.
-		
+
 		Parameters:
 			Text - The text of the new tab. If this parameter contains a pipe character (|), multiple tabs will be created and the return value is an array of CTab objects.
-			
+
 		Returns:
 			An object of type <CTabControl.CTabs.CTab>. If multiple tabs are created, an array of CTab objects is returned.
 		*/
@@ -245,7 +245,7 @@ Class CTabControl Extends CControl
 		;~ Remove(TabNumber)
 		;~ {
 		;~ }
-		
+
 		/*
 		Class: CTabControl.CTabs.CTab
 		A single tab object.
@@ -263,11 +263,11 @@ Class CTabControl Extends CControl
 				if (CGUI.GUIList[GUINum].Controls.HasKey(hwnd))
 					GuiControl, %GUINum%:, % CGUI.GUIList[GUINum].Controls[hwnd].ClassNN, %Text%
 			}
-			
+
 			/*
 			Function: AddControl
 			Adds a control to this tab. The parameters correspond to the Add() function of CGUI.
-			
+
 			Parameters:
 				Type - The type of the control.
 				Name - The name of the control.
@@ -293,10 +293,10 @@ Class CTabControl Extends CControl
 			/*
 			Property: Text
 			The text of the tab.
-			
+
 			Property: Icon
 			The filename of the icon associated with this tab.
-			
+
 			Property: IconNumber
 			The index of the icon in a multi-icon file.
 			*/
@@ -350,7 +350,7 @@ Class CTabControl Extends CControl
 			/*
 			Function: SetIcon
 			Sets the icon of a tab.
-			
+
 			Parameters:
 				Filename - The filename of the file containing the icon.
 				IconNumber - The icon number in a multi-icon file.

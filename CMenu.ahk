@@ -6,7 +6,7 @@ Class CMenu
 {
 	static Menus := [] ;All menu objects are stored statically in CMenu for easier callback routing. This means that all submenus must have unique names.
 	_ := {Checked : 0, Enabled : 1, Default : 0}
-	
+
 	/*
 	Function: __New
 	Creates a new Menu object. Name must be unique through the whole application.
@@ -21,11 +21,11 @@ Class CMenu
 		Menu, % this.Name, Add, Test, CMenu_Callback
 		Menu, % this.Name, Delete, Test
 	}
-	
+
 	/*
 	Function: AddSubMenu
 	Adds a submenu to this menu.
-	
+
 	Parameters:
 		Text - The name under which the submenu will appear in this menu
 		NameOrMenuObject - Either the name of a new menu or an existing CMenu instance.
@@ -50,11 +50,11 @@ Class CMenu
 		else
 			CGUI_Assert(0, "Failed to create submenu")
 	}
-	
+
 	/*
 	Function: AddMenuItem
 	Adds a menu item to this menu. The menu item object is <CMenu.CMenuItem>
-	
+
 	Parameters:
 		Text - The text of the menu item in this menu.
 		Callback - A function that will be called when the menu item is clicked. This function is usually located within a derived class of CGUI. If the Menu is shown through CGUI.ShowMenu() or added as menu bar to a window this parameter can simply be the name of the function contained in the derived class of CGUI.
@@ -65,7 +65,7 @@ Class CMenu
 			return
 		this.Insert(new this.CMenuItem(Text, this.Name, Callback))
 	}
-	
+
 	/*
 	Function: AddSeparator
 	Adds a separator to the menu
@@ -76,12 +76,12 @@ Class CMenu
 			return
 		Menu, % this.Name, Add
 	}
-	
+
 	/*
 	Function: DeleteMenuItem
 	Deletes a menu item from the menu. ObjectIndexOrName can either be a menu/submenu object, the index of the item in this menu or its name.
 	If ObjectIndexOrName is a menu item, it will be disposed. If it is a submenu, it will not be disposed so it can be reused elsewhere.
-	
+
 	Returns: The deleted menu item
 	*/
 	DeleteMenuItem(ObjectIndexOrName)
@@ -112,7 +112,7 @@ Class CMenu
 			Menu.IsDisposed := true
 		}
 	}
-	
+
 	/*
 	Function: DisposeMenu()
 	Disposes the menu so that it can be deleted and its resources are freed. After calling this function the menu won't be usable anymore.
@@ -140,11 +140,11 @@ Class CMenu
 			}
 		}
 	}
-	
+
 	/*
 	Function: Show
 	Shows the menu. For most cases, this function is not called directly. Instead, use <CGUI.ShowMenu>.
-	
+
 	Parameters:
 	GUINum - The GUI number of the window owning this menu. This is required if the callback functions are contained in a class deriving from CGUI. Leave it empty to use global callback functions
 	X - X position of the menu.
@@ -157,11 +157,11 @@ Class CMenu
 		this.Base.LastGUI := GUINum
 		Menu,% this.Name, Show, %X%, %Y%
 	}
-	
+
 	/*
 	Function: SetIcon
 	Sets the icon of this menu item.
-	
+
 	Parameters:
 	Icon - The path to the icon file.
 	IconNumber - The number of the icon in a group
@@ -174,26 +174,26 @@ Class CMenu
 		this._.IconWidth := IconWidth
 		Menu, % this.Parent, Icon, % this.Name, %Icon%, %IconNumber%, %IconWidth%
 	}
-		
+
 	/*
 	Property: Text
 	The text under which this menu appears as a submenu in another menu.
-	
+
 	Property: Enabled
 	Sets whether this submenu is enabled/disabled.
-	
+
 	Property: Checked
 	Sets whether this submenu has a checkmark.
-	
+
 	Property: Default
 	Sets whether this submenu is rendered with bold font.
-	
+
 	Property: Icon
 	The path to the icon of the menu item.
-	
+
 	Property: IconNumber
 	The number of the menu item icon in a grouped icon file.
-	
+
 	Property: IconWidth
 	The width of an icon (>0), a resource identifier (<0) or the actual size of the icon (=0). Use the latter if you have transparency issues.
 	*/
@@ -248,7 +248,7 @@ Class CMenu
 		if(Handled)
 			return Value
 	}
-	
+
 	/*
 	Class: CMenu.CMenuItem
 	A menu item in a <CMenu>. This class is not instantiated directly. Instead, use <CMenu.AddMenuItem>.
@@ -268,11 +268,11 @@ Class CMenu
 			if(this._.HasKey(Name))
 				return this._[Name]
 		}
-		
+
 		/*
 		Function: SetIcon
 		Sets the icon of this menu item.
-		
+
 		Parameters:
 		Icon - The path to the icon file.
 		IconNumber - The number of the icon in a group
@@ -288,22 +288,22 @@ Class CMenu
 		/*
 		Property: Text
 		The text of this menu item.
-		
+
 		Property: Enabled
 		Sets whether this menu item is enabled/disabled.
-		
+
 		Property: Checked
 		Sets whether this menu item has a checkmark.
-		
+
 		Property: Default
 		Sets whether this menu item is rendered with bold font.
-		
+
 		Property: Icon
 		The path to the icon of the menu item.
-		
+
 		Property: IconNumber
 		The number of the menu item icon in a grouped icon file.
-		
+
 		Property: IconWidth
 		The width of an icon (>0), a resource identifier (<0) or the actual size of the icon (=0). Use the latter if you have transparency issues.
 		*/

@@ -24,14 +24,14 @@ Class CTreeViewControl Extends CControl
 	{
 		if(!InStr(Options, "AltSubmit")) ;Automagically add AltSubmit
 			Options .= " AltSubmit"
-			
+
 		base.__New(Name, Options, Text, GUINum)
 		this._.Insert("ControlStyles", {Checked : 0x100, ReadOnly : -0x8, FullRowSelect : 0x1000, Buttons : 0x1, Lines : 0x2, HScroll : -0x8000, AlwaysShowSelection : 0x20, SingleExpand : 0x400, HotTrack : 0x200})
 		this._.Insert("Events", ["DoubleClick", "EditingEnd", "ItemSelected", "Click", "RightClick", "EditingStart", "KeyPress", "ItemExpanded", "ItemCollapsed", "FocusReceived", "FocusLost"])
 		; this._.Insert("Messages", {0x004E : "Notify"}) ;This control uses WM_NOTIFY with NM_SETFOCUS and NM_KILLFOCUS
 		this.Type := "TreeView"
 	}
-	
+
 	PostCreate()
 	{
 		Base.PostCreate()
@@ -42,7 +42,7 @@ Class CTreeViewControl Extends CControl
 	/*
 	Function: FindItem
 	Finds an item by its ID.
-	
+
 	Parameters:
 		ID - The ID of the item.
 	*/
@@ -59,11 +59,11 @@ Class CTreeViewControl Extends CControl
 				return result
 		return 0
 	}
-	
+
 	/*
 	Function: FindItemWithText
 	Finds an item by its text.
-	
+
 	Parameters:
 		Text - The text of the item.
 	*/
@@ -83,10 +83,10 @@ Class CTreeViewControl Extends CControl
 	/*
 	Property: Items
 	Contains the nodes of the tree. Each level can be iterated and indexed. A node is of type <CTreeViewControl.CItem>
-	
+
 	Property: SelectedItem
 	Contains the node of type <CItem> that is currently selected.
-	
+
 	Property: PreviouslySelectedItem
 	Contains the node of type <CItem> that was previously selected.
 	*/
@@ -111,7 +111,7 @@ Class CTreeViewControl Extends CControl
 		if(Value)
 			return Value
 	}
-	
+
 	__Set(Name, Params*)
 	{
 		if(!CGUI.GUIList[this.GUINum].IsDestroyed)
@@ -147,42 +147,42 @@ Class CTreeViewControl Extends CControl
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: Click(Item)
 	Invoked when the user clicked on the control.
-	
+
 	Event: DoubleClick(Item)
 	Invoked when the user double-clicked on the control.
-	
+
 	Event: RightClick(Item)
 	Invoked when the user right-clicked on the control.
-	
+
 	Event: EditingStart(Item)
 	Invoked when the user started editing a node.
-	
+
 	Event: EditingEnd(Item)
 	Invoked when the user finished editing a node.
-	
+
 	Event: ItemSelected(Item)
 	Invoked when the user selected a node.
-	
+
 	Event: ItemExpanded(Item)
 	Invoked when the user expanded a node.
-	
+
 	Event: ItemCollapsed(Item)
 	Invoked when the user collapsed a node.
-	
+
 	Event: KeyPress(KeyCode)
 	Invoked when the user pressed a key while the control was focused.
 	*/
@@ -206,7 +206,7 @@ Class CTreeViewControl Extends CControl
 		if(Event.GUIEvent = "S")
 			this.PreviouslySelectedItem := SelectedItem
 	}
-	
+
 	/*
 	Class: CTreeViewControl.CItem
 	A tree node.
@@ -224,11 +224,11 @@ Class CTreeViewControl Extends CControl
 		/*
 			Function: Add
 			Adds a new item to the TreeView.
-			
+
 			Parameters:
 				Text - The text of the item.
 				Options - Various options, see Autohotkey TreeView documentation
-			
+
 			Returns:
 			An object of type CItem representing the newly added item.
 		*/
@@ -246,11 +246,11 @@ Class CTreeViewControl Extends CControl
 			this.Insert(Item)
 			return Item
 		}
-		
+
 		/*
 		Function: AddControl
 		Adds a control to this tree node that will be visible only when this node is selected. The parameters correspond to the Add() function of CGUI.
-		
+
 		Parameters:
 			Type - The type of the control.
 			Name - The name of the control.
@@ -268,11 +268,11 @@ Class CTreeViewControl Extends CControl
 			Control.hParentControl := this._.hwnd
 			return Control
 		}
-		
+
 		/*
 			Function: Delete
 			Deletes an item.
-			
+
 			Parameters:
 				ObjectOrIndex - The item object or the index of the child item of this.
 		*/
@@ -316,7 +316,7 @@ Class CTreeViewControl Extends CControl
 		/*
 		Function: Move
 		Moves an Item to another position.
-		
+
 		Parameters:
 			Position - The new (one-based) - position in the child items of Parent.
 			Parent - The item will be inserted as child of the Parent item. Leave empty to use its current parent.
@@ -329,7 +329,7 @@ Class CTreeViewControl Extends CControl
 			Control := GUI.Controls[this._.hwnd]
 			Gui, % this._.GUINum ":Default"
 			Gui, TreeView, % Control.ClassNN
-			
+
 			;Backup properties which are stored in the TreeList itself
 			Text := this.Text
 			Bold := this.bold
@@ -337,22 +337,22 @@ Class CTreeViewControl Extends CControl
 			Checked := this.Checked
 			Selected := this.Selected
 			OldID := this.ID
-			
+
 			;If no parent is specified, the item will be moved on the current level
 			if(!Parent)
 				Parent := this.Parent
 			OldParent := this.Parent
-			
+
 			;Add new node. At this point there are two nodes.
 			NewID := TV_Add(Text, Parent.ID, (Position = 1 ? "First" : Parent[Position-1].ID) " " (Bold ? "+Bold" : "") (Expanded ?  "Expand" : "") (Checked ? "Check" : "") (Selected ? "Select" : ""))
-			
+
 			;Collect all child items
 			Childs := []
 			for index, Item in this
 				Childs.Insert(Item)
-			
+
 			this._.ID := NewID
-			
+
 			;Remove old parent node link and set the new one
 			if(OldParent != Parent)
 			{
@@ -364,21 +364,21 @@ Class CTreeViewControl Extends CControl
 					}
 				Parent.Insert(Position, this)
 			}
-			
+
 			if(this.Icon)
 				Control._.ImageListManager.SetIcon(this._.ID, this.Icon, this.IconNumber)
-			
+
 			;Move child items
 			for index, Item in Childs
 				Item.Move(index, this)
-			
+
 			;Delete old tree node
 			TV_Delete(OldID)
 		}
 		/*
 		Function: SetIcon
 		Sets the icon of a tree node
-		
+
 		Parameters:
 			Filename - The filename of the file containing the icon.
 			IconNumberOrTransparencyColor - The icon number or the transparency color if the used file has no transparency support.
@@ -413,11 +413,11 @@ Class CTreeViewControl Extends CControl
 				count++
 			return count + 1
 		}
-		
+
 		/*
 		Function: ItemByID
 		Access a child item by its ID.
-		
+
 		Parameters:
 			ID - The ID of the child item
 		*/
@@ -432,11 +432,11 @@ Class CTreeViewControl Extends CControl
 					return Item
 			}
 		}
-		
+
 		/*
 		Function: FindItemWithText
 		Finds a child item by its Text.
-		
+
 		Parameters:
 			Text - The text of the child item
 		*/
@@ -450,47 +450,47 @@ Class CTreeViewControl Extends CControl
 		{
 			return new CEnumerator(this)
 		}
-		
+
 		/*
 		Property: 1,2,3,4,...
 		The child nodes of a tree node may be accessed by their index, e.g. this.TreeView1.Items[1][2][3].Text := "AHK"
-		
+
 		Property: CheckedItems
 		An array containing all checked child nodes of type <CTreeViewControl.CItem>.
-		
+
 		Property: CheckedIndices
 		An array containing all checked child indices.
-		
+
 		Property: Parent
 		The parent node of this node.
-		
+
 		Property: ID
 		The ID used internally in the TreeView control.
-		
+
 		Property: Icon
 		The path of an icon assigned to this node.
-		
+
 		Property: IconNumber
 		The icon number used when an icon file contains more than one icon.
-		
+
 		Property: Count
 		The number of child nodes.
-		
+
 		Property: HasChildren
 		True if there is at least one child node.
-		
+
 		Property: Text
 		The text of this tree node.
-		
+
 		Property: Checked
 		True if the tree node is checked.
-		
+
 		Property: Selected
 		True if the tree node is selected.
-		
+
 		Property: Expanded
 		True if the tree node is expanded.
-		
+
 		Property: Bold
 		If true, the text of this node is bold.
 		*/

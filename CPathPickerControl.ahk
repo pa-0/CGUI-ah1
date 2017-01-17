@@ -19,7 +19,7 @@ Class CPathPickerControl extends CCompoundControl
         if (Key = "Path")
             return this.Container.Edit.Text
     }
-     
+
     __Set(Key, Value)
     {
         if (Key = "Path")
