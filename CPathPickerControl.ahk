@@ -1,5 +1,5 @@
-#include <Parse>
-#include <CCompoundControl>
+#include %A_LineFile%\..\Parse.ahk
+#include %A_LineFile%\..\CCompoundControl.ahk
 Class CPathPickerControl extends CCompoundControl
 {
 	static registration := CGUI.RegisterControl("PathPicker", CPathPickerControl)
@@ -19,7 +19,7 @@ Class CPathPickerControl extends CCompoundControl
         if (Key = "Path")
             return this.Container.Edit.Text
     }
-     
+
     __Set(Key, Value)
     {
         if (Key = "Path")

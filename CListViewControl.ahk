@@ -28,12 +28,12 @@ Class CListViewControl Extends CControl
 	SelectionChanged := new EventHandler()
 	CheckedChanged := new EventHandler()
 	FocusedChanged := new EventHandler()
-	
+
 	__New(Name, ByRef Options, Text, GUINum)
 	{
 		if(!InStr(Options, "AltSubmit")) ;Automagically add AltSubmit
 			Options .= " AltSubmit"
-			
+
 		base.__New(Name, Options, Text, GUINum)
 		this._.Insert("ControlStyles", {ReadOnly : -0x200, Header : -0x4000, NoSortHdr : 0x8000, AlwaysShowSelection : 0x8, Multi : -0x4, Sort : 0x10, SortDescending : 0x20})
 		this._.Insert("ControlExStyles", {Checked : 0x4, FullRowSelect : 0x20, Grid : 0x1, AllowHeaderReordering : 0x10, HotTrack : 0x8})
@@ -42,7 +42,7 @@ Class CListViewControl Extends CControl
 		this.IndependentSorting := false ;Set to skip redundant __Get calls
 		this.Type := "ListView"
 	}
-	
+
 	PostCreate()
 	{
 		Base.PostCreate()
@@ -52,7 +52,7 @@ Class CListViewControl Extends CControl
 	/*
 	Function: ModifyCol
 	Modifies a column. All parameters are optional, see AHK help on LV_ModifyCol for details.
-	
+
 	Parameters:
 		ColumnNumber - The number of the column to modify, one-based
 		Options - The new width. See AHK documentation.
@@ -71,7 +71,7 @@ Class CListViewControl Extends CControl
 	/*
 	Function: InsertCol
 	Inserts a column. See AHK help on LV_InsertCol for details.
-	
+
 	Parameters:
 		ColumnNumber - The position of the new column
 		Options - The new width. See AHK documentation.
@@ -102,55 +102,55 @@ Class CListViewControl Extends CControl
 	/*
 	Property: Items
 	An array of all ListView rows. See <CListViewControl.CItems>.
-	
+
 	Property: SelectedItem
 	Contains the (first) selected row.
-	
+
 	Property: SelectedItems
 	Contains all selected rows.
-	
+
 	Property: SelectedIndex
 	Contains the index of the (first) selected row.
-	
+
 	Property: SelectedIndices
 	Contains all indices of the selected rows.
-	
+
 	Property: CheckedItem
 	Contains the (first) checked row.
-	
+
 	Property: CheckedItems
 	Contains all checked rows.
-	
+
 	Property: CheckedIndex
 	Contains the index of the (first) checked row.
-	
+
 	Property: CheckedIndices
 	Contains all indices of the checked rows.
-	
+
 	Property: FocusedItem
 	Contains the focused row.
-	
+
 	Property: FocusedIndex
 	Contains the index of the focused row.
-	
+
 	Property: List
 	Set to true to use the List view mode.
-	
+
 	Property: Report
 	Set to true to use the Report view mode.
-	
+
 	Property: Icon
 	Set to true to use the Icon view mode.
-	
+
 	Property: IconSmall
 	Set to true to use the IconSmall view mode.
-	
+
 	Property: Tile
 	Set to true to use the Tile view mode.
-	
+
 	Property: LargeIcons
 	True if this control should display large icons. Only used in List and Report view modes.
-	
+
 	Property: IndependentSorting
 	This setting is off by default. In this case, indexing the rows behaves like AHK ListViews usually do.
 	If it is enabled however, the row indexing will be independent of the current sorting.
@@ -336,7 +336,7 @@ Class CListViewControl Extends CControl
 				return Value
 		}
 	}
-	
+
 	/*
 	Class: CListViewControl.CItems
 	An array of all ListView rows.
@@ -370,11 +370,11 @@ Class CListViewControl Extends CControl
 		/*
 		Function: Add
 		Adds a row.
-		
+
 		Parameters:
 			Options - Options for the new row. See AHK documentation on LV_Add().
 			Fields - Any additional parameters are used as cell text.
-			
+
 		Returns: The added <CRow> item
 		*/
 		Add(Options, Fields*)
@@ -409,7 +409,7 @@ Class CListViewControl Extends CControl
 		/*
 		Function: Insert
 		Inserts a row.
-		
+
 		Parameters:
 			RowNumber - Index before which the row is inserted.
 			Options - Options for the new row. See AHK documentation on LV_Add().
@@ -426,9 +426,9 @@ Class CListViewControl Extends CControl
 			SortedIndex := Control.IndependentSorting ? this.CRow.GetSortedIndex(RowNumber, Control.hwnd) : RowNumber ;If independent sorting is off, the RowNumber parameter of this function is interpreted as sorted index
 			if(SortedIndex = -1 || SortedIndex > LV_GetCount())
 				SortedIndex := LV_GetCount() + 1
-			
+
 			UnsortedIndex := this.CRow.GetUnsortedIndex(SortedIndex, Control.hwnd)
-			
+
 			;move all unsorted indices >= the insertion point up by one to make place for the insertion
 			Loop % LV_GetCount() - UnsortedIndex + 1
 			{
@@ -438,7 +438,7 @@ Class CListViewControl Extends CControl
 				this._[index + 1] := this._[index] ;Fix up the internally stored indices
 				this._[index + 1]._.RowNumber := index + 1
 			}
-			
+
 			SortedIndex := LV_Insert(SortedIndex, Options, Fields*)
 			this._.Insert(UnsortedIndex, new this.CRow(SortedIndex, UnsortedIndex, this._.GUINum, Control.hwnd))
 			if(InStr(Options, "Select"))
@@ -457,11 +457,11 @@ Class CListViewControl Extends CControl
 				}
 			}
 		}
-		
+
 		/*
 		Function: Modify
 		Modifies a row.
-		
+
 		Parameters:
 			RowNumberOrItem - Index of the row or the item which should be modified.
 			Options - Options for the modified row. See AHK documentation on LV_Modify().
@@ -478,7 +478,7 @@ Class CListViewControl Extends CControl
 			if(IsObject(RowNumberOrItem))
 				RowNumberOrItem.Modify(Options, Fields*)
 		}
-		
+
 		/*
 		Function: Clear
 		Clears the ListView by deleting all rows.
@@ -501,7 +501,7 @@ Class CListViewControl Extends CControl
 		/*
 		Function: Delete
 		Deletes a row.
-		
+
 		Parameters:
 			RowNumberOrItem - Index of the row which should be deleted or a <CRow> object.
 		*/
@@ -527,7 +527,7 @@ Class CListViewControl Extends CControl
 				this._[UnsortedIndex + A_Index - 1]._.RowNumber := UnsortedIndex + A_Index - 1
 			}
 			result := LV_Delete(SortedIndex)
-			
+
 			if(WasSelected)
 			{
 				if(LV_GetCount("Selected") = 1)
@@ -547,7 +547,7 @@ Class CListViewControl Extends CControl
 		/*
 		Property: 1,2,3,4,...
 		Rows can be accessed by their index, e.g. this.ListView.Items[1][2] accesses the text of the first row and second column.
-		
+
 		Property: Count
 		The number of rows.
 		*/
@@ -591,7 +591,7 @@ Class CListViewControl Extends CControl
 				}
 			}
 		}
-		
+
 		/*
 		Class: CListViewControl.CItems.CRow
 		A single row of a ListView control.
@@ -617,7 +617,7 @@ Class CListViewControl Extends CControl
 			/*
 			Function: AddControl
 			Adds a control to this item that will be visible/enabled only when this item is selected. The parameters correspond to the Add() function of CGUI.
-			
+
 			Parameters:
 				Type - The type of the control.
 				Name - The name of the control.
@@ -720,7 +720,7 @@ Class CListViewControl Extends CControl
 			/*
 			Function: SetIcon
 			Sets the icon of a ListView row
-			
+
 			Parameters:
 				Filename - The filename of the file containing the icon or a hBitmap.
 				IconNumberOrTransparencyColor - The icon number or the transparency color if the used file has no transparency support.
@@ -738,7 +738,7 @@ Class CListViewControl Extends CControl
 			/*
 			Function: Modify
 			Modifies a row.
-			
+
 			Parameters:
 				Options - Options for the modified row. See AHK documentation on LV_Modify().
 				Fields - Any additional parameters are used as cell text.
@@ -772,28 +772,28 @@ Class CListViewControl Extends CControl
 			/*
 			Property: 1,2,3,4,...
 			Columns can be accessed by their index, e.g. this.ListView.Items[1][2] accesses the text of the first row and second column.
-			
+
 			Property: Text
 			The text of the first column of this row.
-			
+
 			Property: Index
 			The index of this row. It obeys the setting of IndependentSorting.
-			
+
 			Property: Count
 			The number of columns.
-			
+
 			Property: Checked
 			True if the row is checked.
-			
+
 			Property: Selected
 			True if the row is selected.
-			
+
 			Property: Focused
 			True if the row is foucsed.
-			
+
 			Property: Icon
 			The filename of the file containing the icon for the current row.
-			
+
 			Property: IconNumber
 			The number of the icon in a multi-icon file.
 			*/
@@ -900,85 +900,85 @@ Class CListViewControl Extends CControl
 			}
 		}
 	}
-	
+
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: Click(RowItem)
 	Invoked when the user clicked on the control.
-	
+
 	Event: DoubleClick(RowItem)
 	Invoked when the user double-clicked on the control.
-	
+
 	Event: RightClick(RowItem)
 	Invoked when the user right-clicked on the control.
-	
+
 	Event: DoubleRightClick(RowItem)
 	Invoked when the user double-right-clicked on the control.
-	
+
 	Event: ColumnClick(ColumnIndex)
 	Invoked when the user clicked on a column header.
-	
+
 	Event: EditingStart(RowItem)
 	Invoked when the user started editing the first cell of a row.
-	
+
 	Event: EditingEnd(RowItem)
 	Invoked when the user finished editing a cell.
-	
+
 	Event: ItemActivate(RowItem)
 	Invoked when a row was activated.
-	
+
 	Event: KeyPress(KeyCode)
 	Invoked when the user pressed a key while the control had focus.
-	
+
 	Event: MouseLeave()
 	Invoked when the mouse leaves the control boundaries.
-	
+
 	Event: FocusReceived()
 	Invoked when the control receives the focus.
-	
+
 	Event: FocusLost()
 	Invoked when the control loses the focus.
-	
+
 	Event: Marquee()
 	Invoked when the mouse gets moved over the control.
-	
+
 	Event: ScrollingStart()
 	Invoked when the user starts scrolling the control.
-	
+
 	Event: ScrollingEnd()
 	Invoked when the user ends scrolling the control.
-	
+
 	Event: SelectionChanged(RowItem)
 	Invoked when the selected item(s) has/have changed.
-	
+
 	Event: ItemFocused(RowItem)
 	Invoked when a row gets focused.
-	
+
 	Event: ItemDefocused(RowItem)
 	Invoked when a row loses the focus.
-	
+
 	Event: FocusedChanged(RowItem)
 	Invoked when the row focus has changed.
-	
+
 	Event: ItemChecked(RowItem)
 	Invoked when the user checks a row.
-	
+
 	Event: ItemUnchecked(RowItem)
 	Invoked when the user unchecks a row.
-	
+
 	Event: CheckedChanged(RowItem)
 	Invoked when the checked row(s) has/have changed.
 	*/

@@ -1,5 +1,5 @@
-#include EventHandler.ahk
-#include Delegate.ahk
+#include %A_LineFile%\..\EventHandler.ahk
+#include %A_LineFile%\..\Delegate.ahk
 /*
 Class: CControl
 Basic control class from which all controls extend.
@@ -8,7 +8,7 @@ Class CControl ;Never created directly
 {
 	OnValidate := new EventHandler()
 	ContextMenu := new EventHandler()
-	
+
 	__New(Name, Options, Text, GUINum) ;Basic constructor for all controls. The control is created in CGUI.AddControl()
 	{
 		this.Insert("Name", Name)
@@ -62,7 +62,7 @@ Class CControl ;Never created directly
 			return
 		GuiControl, % this.GUINum ":Show",% this.hwnd
 	}
-	
+
 	/*
 	Function: Hide
 	Hides the control if it was previously visible.
@@ -73,7 +73,7 @@ Class CControl ;Never created directly
 			return
 		GuiControl, % this.GUINum ":Hide",% this.hwnd
 	}
-	
+
 	/*
 	Function: Enable
 	Enables the control if it was previously diisabled.
@@ -82,7 +82,7 @@ Class CControl ;Never created directly
 	{
 		GuiControl, % this.GUINum ":Enable",% this.hwnd
 	}
-	
+
 	/*
 	Function: Disable
 	Disables the control if it was previously enabled.
@@ -91,7 +91,7 @@ Class CControl ;Never created directly
 	{
 		GuiControl, % this.GUINum ":Disable",% this.hwnd
 	}
-	
+
 	/*
 	Function: Focus
 	Sets the focus to this control.
@@ -120,8 +120,8 @@ Class CControl ;Never created directly
 		;~ GuiControl, % this.GUINum ":Font", % this.ClassNN
 		;~ Gui, % this.GUINum ":Font", % CGUI.GUIList[this.GUINum].Font.Options, % CGUI.GUIList[this.GUINum].Font.Font ;Restore current font
 	;~ }
-	
-	
+
+
 	/*
 	Validates the text value of this control by calling a <Control.OnValidate> event function which needs to return the validated (or same) value.
 	This value is then used as text for the control if it differs.
@@ -134,18 +134,18 @@ Class CControl ;Never created directly
 	}
 	/*
 	Function: RegisterEvent
-	
+
 	Attention! This function is deprecated!	It is suggest to use event handlers instead.
 	Simply use the following with one of the options in the brackets:
 	control.EventName.Handler := ["HandlingFunction",Func("HandlingFunction"),new Delegate(object,"Member function").
 	The function that handles the event will receive an additional first parameter which contains the control that sent the event.
-	
+
 	Assigns (or unassigns) a function to a specific event of this control so that the function will be called when the event occurs.
 	This is normally not necessary because functions in the GUI class with the name ControlName_EventName()
 	will be called automatically without needing to be registered. However this can be useful if you want to handle
 	multiple events with a single function, e.g. for a group of radio controls. Right now only one registered function per event
 	is supported, let me know if you need more.
-	
+
 	Parameters:
 		Type - The event name for which the function should be registered. If a control normally calls "GUI.ControlName_TextChanged()", specify "TextChanged" here.
 		FunctionName - The name of the function specified in the window class that is supposed to handle the event. Specify only the name of the function, skip the class.
@@ -161,7 +161,7 @@ Class CControl ;Never created directly
 		else
 			this._.RegisteredEvents.Remove(Type)
 	}
-	
+
 	/*
 	Calls an event with a specified name by looking up a possibly registered event handling function or calling the function with the default name.
 	Returns an object with Handled and Result keys, where Handled indicates if the function was successfully called and Result is the return value of the function.
@@ -211,7 +211,7 @@ Class CControl ;Never created directly
 			}
 		}
 	}
-	
+
 	IsValidatableControlType()
 	{
 		return CGUI_IndexOf(["Edit", "ComboBox"], this.Type)
@@ -219,83 +219,83 @@ Class CControl ;Never created directly
 	/*
 	Property: x
 	x-Position of the control.
-	
+
 	Property: y
 	y-Position of the control.
-	
+
 	Property: width
 	Width of the control.
-	
+
 	Property: height
 	Height of the control.
-	
+
 	Property: Position
 	An object containing the x and y values. They can not be set separately through this object, only both at once.
-	
+
 	Property: Size
 	An object containing the width and height values. They can not be set separately through this object, only both at once.
-	
+
 	Property: Text
 	The text of the control. Some controls don't support this property.
-	
+
 	Property: ClassNN
 	The control class together with a number identify the control.
-	
+
 	Property: Enabled
 	Determines wether this control can be interacted with.
-	
+
 	Property: Visible
 	Determines wether this control is currently visible.
-	
+
 	Property: Style
 	The style of the control.
-	
+
 	Property: ExStyle
 	The extended style of the control.
-	
+
 	Property: Focused
 	True if the control currently has the focus. It's also possible to focus it by setting this value to true.
-	
+
 	Property: Tooltip
 	If a text is set for this value, this control will show a tooltip when the mouse hovers over it.
 	Text and Picture controls require that you define a g-label for them to make this work.
-	
+
 	Property: Menu
 	If this variable contains an instance of <CMenu> and there is no ContextMenu() event handler for this control, this menu will be shown when the user right clicks on this control or presses the AppsKey while this control has focus.
-	
+
 	Property: Left
 	The control left-aligns its text. This is the default setting.
-	
+
 	Property: Center
 	The control center-aligns its text.
-	
+
 	Property: Right
 	The control right-aligns its text.
-	
+
 	Property: TabStop
 	If set to false, this control will not receive the focus when pressing tab to cycle through all controls.
-	
+
 	Property: Wrap
 	If enabled, the control will use word-wrapping for its text.
-	
+
 	Property: HScroll
 	Provides a horizontal scroll bar for this control if appropriate.
-	
+
 	Property: VScroll
 	Provides a vertical scroll bar for this control if appropriate.
-	
+
 	Property: BackgroundTrans
 	Uses a transparent background, which allows any control that lies behind a Text, Picture, or GroupBox control to show through.
-	
+
 	Property: Background
 	If disable, the control uses the standard background color rather than the one set by the CGUI.Color() function.
-	
+
 	Property: Border
 	Provides a thin-line border around the control.
-	
+
 	Property: hParentControl
 	If this control is a subcontrol of another control, this variable contains the window handle of the parent control.
-	
+
 	Property: DisableNotifications
 	If true, this control will not call any of its notification functions. This is useful when the controls of a window are first created and change handlers should not be called.
 	*/
@@ -304,7 +304,7 @@ Class CControl ;Never created directly
         if(this.__GetEx(Result, Name, Params*) )
             return Result
     }
-	
+
 	__GetEx(ByRef Result, Name, Params*)
     {
 		Handled := false
@@ -406,7 +406,7 @@ Class CControl ;Never created directly
 			}
 		return Handled
     }
-	
+
     __Set(Name, Params*)
     {
 		if(Name != "_" && !CGUI.GUIList[this.GUINum].IsDestroyed)
@@ -519,10 +519,10 @@ Class CControl ;Never created directly
 					  LPTSTR    lpszText;
 					#if (_WIN32_IE >= 0x0300)
 					  LPARAM    lParam;
-					#endif 
+					#endif
 					#if (_WIN32_WINNT >= Ox0501)
 					  void      *lpReserved;
-					#endif 
+					#endif
 					} TOOLINFO, *PTOOLINFO, *LPTOOLINFO;
 					*/
 					Varsetcapacity(TInfo, 24 + 6 * A_PtrSize, 0)
@@ -547,32 +547,32 @@ Class CControl ;Never created directly
 				return Value
 		}
     }
-	
+
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: ContextMenu
 	Invoked when the user right clicks on the control or presses the AppsKey while this control has focus. If this event is not handled a static context menu can be shown by setting the Menu variable of this control to an instance of <CMenu>.
-	
+
 	Event: OnValidate
 	Invoked when the control is asked to validate its (textual) contents. This event is only valid for controls containing text, which are only Edit and ComboBox controls as of now.
-	
+
 	Parameters:
 		Text - The current text of the control that should be validated. The function can return this value if it is valid or another valid value.
 	*/
-	
+
 	/*
 	Class: CImageListManager
 	This class is used internally to manage the ImageLists of ListView/TreeView/Tab controls. Does not need to be used directly.
@@ -660,7 +660,7 @@ Class CControl ;Never created directly
 						Icon := this._.IconList[A_Index]
 						break
 					}
-				
+
 				if(!Icon)
 				{
 					IID := IL_Add(this._.IconList.SmallIL_ID, PathorhBitmap, IconNumber, 1)
@@ -710,19 +710,19 @@ Class CControl ;Never created directly
 	}
 }
 
-#include CTextControl.ahk
-#include CEditControl.ahk
-#include CButtonControl.ahk
-#include CCheckboxControl.ahk
-#include CChoiceControl.ahk
-#include CListViewControl.ahk
-#include CLinkControl.ahk
-#include CPictureControl.ahk
-#include CGroupBoxControl.ahk
-#include CStatusBarControl.ahk
-#include CTreeViewControl.ahk
-#include CTabControl.ahk
-#include CProgressControl.ahk
-#include CSliderControl.ahk
-#include CHotkeyControl.ahk
-#include CActiveXControl.ahk
+#include %A_LineFile%\..\CTextControl.ahk
+#include %A_LineFile%\..\CEditControl.ahk
+#include %A_LineFile%\..\CButtonControl.ahk
+#include %A_LineFile%\..\CCheckboxControl.ahk
+#include %A_LineFile%\..\CChoiceControl.ahk
+#include %A_LineFile%\..\CListViewControl.ahk
+#include %A_LineFile%\..\CLinkControl.ahk
+#include %A_LineFile%\..\CPictureControl.ahk
+#include %A_LineFile%\..\CGroupBoxControl.ahk
+#include %A_LineFile%\..\CStatusBarControl.ahk
+#include %A_LineFile%\..\CTreeViewControl.ahk
+#include %A_LineFile%\..\CTabControl.ahk
+#include %A_LineFile%\..\CProgressControl.ahk
+#include %A_LineFile%\..\CSliderControl.ahk
+#include %A_LineFile%\..\CHotkeyControl.ahk
+#include %A_LineFile%\..\CActiveXControl.ahk

@@ -1,0 +1,3 @@
+*.sublime-*
+_create_docs.cmd
+NaturalDocs/*
