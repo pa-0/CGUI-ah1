@@ -10,7 +10,7 @@ Class CPictureControl Extends CControl
 
 	Click := new EventHandler()
 	DoubleClick := new EventHandler()
-	
+
 	__New(Name, Options, Text, GUINum)
 	{
 		if(Text && DllCall("GetObjectType", "PTR", Text) != (OBJ_BITMAP := 7) && !FileExist(Text)) ;If Text is no bitmap or path, assume that it's an icon and add the matching style
@@ -46,10 +46,10 @@ Class CPictureControl Extends CControl
 	Property: Picture
 	The picture can be changed by assigning a filename to this property.
 	If the picture was set by providing a hBitmap in <SetImageFromHBitmap>, this variable will be empty.
-	
+
 	Property: PictureWidth
 	The width of the currently displayed picture in pixels.
-	
+
 	Property: PictureHeight
 	The height of the currently displayed picture in pixels.
 	*/
@@ -79,7 +79,7 @@ Class CPictureControl Extends CControl
 				return Value
 		}
 	}
-	
+
 	__Set(Name, Params*)
 	{
 		if(!CGUI.GUIList[this.GUINum].IsDestroyed)
@@ -114,7 +114,7 @@ Class CPictureControl Extends CControl
 	/*
 	Function: SetImageFromHBitmap
 	Sets the image of this control.
-	
+
 	Parameters:
 		hBitamp - The bitmap handle to which the picture of this control is set. Can also be hIcon if the control has a 0x3 style on creation. This style is added automatically when a hIcon is used as Text on creation.
 	*/
@@ -134,25 +134,25 @@ Class CPictureControl Extends CControl
 		this._.Remove("PictureHeight")
 		this._.Picture := Path
 	}
-	
+
 	/*
 	Event: Introduction
 	There are currently 3 methods to handle control events:
-	
+
 	1)	Use an event handler. Simply use control.EventName.Handler := "HandlingFunction"
 		Instead of "HandlingFunction" it is also possible to pass a function reference or a Delegate: control.EventName.Handler := new Delegate(Object, "HandlingFunction")
 		If this method is used, the first parameter will contain the control object that sent this event.
-		
+
 	2)	Create a function with this naming scheme in your window class: ControlName_EventName(params)
-	
+
 	3)	Instead of using ControlName_EventName() you may also call <CControl.RegisterEvent> on a control instance to register a different event function name.
 		This method is deprecated since event handlers are more flexible.
-		
+
 	The parameters depend on the event and there may not be params at all in some cases.
-	
+
 	Event: Click()
 	Invoked when the user clicked on the control.
-	
+
 	Event: DoubleClick()
 	Invoked when the user double-clicked on the control.
 	*/
@@ -160,6 +160,6 @@ Class CPictureControl Extends CControl
 	{
 		this.CallEvent(Event.GUIEvent = "DoubleClick" ? "DoubleClick" : "Click")
 	}
-	
+
 
 }

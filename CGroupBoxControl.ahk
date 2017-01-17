@@ -19,7 +19,7 @@ Class CGroupBoxControl Extends CControl
 	/*
 	Function: AddControl
 	Adds a control to this groupbox. The parameters correspond to the Add() function of CGUI, but the coordinates are relative to the GroupBox.
-	
+
 	Parameters:
 		Type - The type of the control.
 		Name - The name of the control.
@@ -35,7 +35,7 @@ Class CGroupBoxControl Extends CControl
 		Control.hParentControl := this.hwnd
 		return Control
 	}
-	
+
 	/*
 	Property: Controls
 	An array of controls added to this groupbox. The controls are accessed by name.
@@ -53,7 +53,7 @@ Class CGroupBoxControl Extends CControl
 		if(Value != "")
 			return Value
 	}
-	
+
 	/*
 	Function: Hide
 	Hides the groupbox and all of its controls

@@ -108,7 +108,7 @@ Class CActiveXControl Extends CControl
 	Function: IsMemberOf
 	Checks if the ActiveX object supports a parameter. This does not check if it is read/write/call-able.
 	Thanks to jethrow, Lexikos and Sean for this function!
-	
+
 	Parameters:
 		name - the parameter to check for.
 	*/
