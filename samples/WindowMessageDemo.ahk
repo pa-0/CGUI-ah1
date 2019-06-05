@@ -1,6 +1,6 @@
 SetBatchlines, -1
 MyWindow       := new CWindowMessageDemo() ;Create an instance of this window class
-MySecondWindow := new CWindowMessageDemo() ;Create a second instance of this window class
+;MySecondWindow := new CWindowMessageDemo() ;Create a second instance of this window class
 return
 
 #include ..\CGUI.ahk
