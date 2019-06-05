@@ -52,6 +52,7 @@ GoTo CGUI_END
 ;  * ...?
 
 CGUI_END:
+_:=_ ;Required to prevent label pointing to label.
 
 
 ;;DEBUGGING:
