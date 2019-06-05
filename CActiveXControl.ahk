@@ -113,10 +113,14 @@ Class CActiveXControl Extends CControl
 		name - the parameter to check for.
 	*/
 	IsMemberOf(name) {
-	   out := DllCall(NumGet(NumGet(1*p:=ComObjUnwrap(this._.Object))+A_PtrSize*5), "Ptr",p, "Ptr",VarSetCapacity(iid,16,0)*0+&iid, "Ptr*",&name, "UInt",1, "UInt",1024, "Int*",dispID)=0 && dispID+1
-	   ObjRelease(p)
-	   return out
+    obj := this._.Object
+    pDisp := ComObjValue(obj)
+    GetIDsOfNames := NumGet(NumGet(pDisp + 0), 5*A_PtrSize)
+    VarSetCapacity(IID_NULL, 16, 0), DISPID := 0 ;// Make #Warn happy
+    r := DllCall(GetIDsOfNames, "Ptr", pDisp, "Ptr", &IID_NULL, "Ptr*", &name, "UInt", 1, "UInt", 1024, "Int*", DISPID)
+    return (r == 0) && (DISPID + 1)
 	}
+  
 	/*
 	Event: Introduction
 	To handle control events you need to create a function with this naming scheme in your window class: ControlName_EventName(params)
