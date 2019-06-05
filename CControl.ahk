@@ -58,8 +58,9 @@ Class CControl ;Never created directly
 	*/
 	Show()
 	{
-		if(CGUI.GUIList[this.GUINum].IsDestroyed)
+		if (CGUI.GUIList[this.GUINum].IsDestroyed) {
 			return
+    }
 		GuiControl, % this.GUINum ":Show",% this.hwnd
 	}
 
@@ -590,15 +591,32 @@ Class CControl ;Never created directly
 		{
 			GUI := CGUI.GUIList[this._.GUINum]
 			Control := GUI.Controls[this._.hwnd]
-			if(Name = "LargeIcons" &&  Control.Type = "ListView")
+			if(Name = "LargeIcons" &&  (Control.Type = "ListView" || Control.Type = "TreeView"))
 			{
 				GUI, % this._.GUINum ":Default"
-				if(Control.Type = "ListView")
-					GUI, ListView, % Control.ClassNN
-				LV_SetImageList(this._.IconList.LargeIL_ID, Value = 1)
+				if(Control.Type = "ListView"){
+        	GUI, ListView, % Control.ClassNN
+          LV_SetImageList(this._.IconList.LargeIL_ID, Value = 1)
+        }
+        if(Control.Type = "TreeView"){
+					GUI, TreeView, % Control.ClassNN
+          TV_SetImageList(this._.IconList.LargeIL_ID, Value = 1)
+        }
 				this._.LargeIcons := Value = 1
 				return Value = 1
-			}
+			} else if (Name="DefaultIcon") {
+        GUI, % this._.GUINum ":Default"
+        if(Control.Type = "ListView"){
+          GUI, ListView, % Control.ClassNN
+        } else if (Control.Type = "TreeView"){
+          GUI, TreeView, % Control.ClassNN
+        }
+        if(this._.LargeIcons){
+          return this.SetIcon(this._.IconList.LargeIL_ID,Value,1)
+        } else {
+          return this.SetIcon(this._.IconList.SmallIL_ID,Value,1)
+        }
+      }
 		}
 		__get(Name)
 		{
@@ -632,25 +650,51 @@ Class CControl ;Never created directly
 				GUI, ListView, % Control.ClassNN
 			else if(Control.Type = "TreeView")
 				Gui, TreeView, % Control.ClassNN
-			if(!this._.IconList.SmallIL_ID)
+			
+      ;;;???
+      if(!this._.IconList.SmallIL_ID && !this._.IconList.LargeIL_ID)
 			{
-				if(Control.Type = "ListView") ;Listview also has large icons
-				{
-					this._.IconList.LargeIL_ID := IL_Create(5, 5, 1)
-					LV_SetImageList(this._.IconList.LargeIL_ID, this._.LargeIcons = 1)
-				}
-				this._.IconList.SmallIL_ID := IL_Create(5, 5, 0)
-				if(Control.Type = "ListView" && !this._.LargeIcons)
-					LV_SetImageList(this._.IconList.SmallIL_ID)
-				else if(Control.Type = "TreeView")
-				{
-					SendMessage, 0x1109, 0, this._.IconList.SmallIL_ID, % Control.ClassNN, % "ahk_id " GUI.hwnd  ; 0x1109 is TVM_SETIMAGELIST
-					if ErrorLevel  ; The TreeView had a previous ImageList.
-						IL_Destroy(ErrorLevel)
-				}
-				else if(Control.Type = "Tab")
-					SendMessage, 0x1303, 0, this._.IconList.SmallIL_ID, % Control.ClassNN, % "ahk_id " GUI.hwnd  ; 0x1109 is TVM_SETIMAGELIST
+        ;;; MODIFIED BY SANCARN
+        if(this._.LargeIcons)
+        {
+          this._.IconList.LargeIL_ID := IL_Create(5, 5, 1)
+          if(Control.Type = "ListView") {
+            old := LV_SetImageList(this._.IconList.LargeIL_ID, this._.LargeIcons = 1)
+            large_icon_successful:=true
+          } else if(Control.Type = "TreeView") {
+            ;SendMessage, 0x1109, 0, this._.IconList.SmallIL_ID, % Control.ClassNN, % "ahk_id " GUI.hwnd  ; 0x1109 is TVM_SETIMAGELIST
+            old := TV_SetImageList(this._.IconList.LargeIL_ID)
+            large_icon_successful:=true
+          } else if(Control.Type = "Tab") {
+            ;Can't use large icons, just use small icons here:
+            this._.IconList.SmallIL_ID := IL_Create(5, 5, 0)
+            SendMessage, 0x1303, 0, this._.IconList.SmallIL_ID, % Control.ClassNN, % "ahk_id " GUI.hwnd  ; for Tabs TVM_SETIMAGELIST
+            if ErrorLevel
+              old:=ErrorLevel
+          } else {
+            msgbox "Error. Not implemented"
+          }
+        } else {
+          this._.IconList.SmallIL_ID := IL_Create(5, 5, 0)
+          if(Control.Type = "ListView"){
+            old:=LV_SetImageList(this._.IconList.SmallIL_ID)
+          }else if(Control.Type = "TreeView") {
+            ;Not sure why send message used directly here? Therefore replaced -- Sancarn
+            ;SendMessage, 0x1109, 0, this._.IconList.SmallIL_ID, % Control.ClassNN, % "ahk_id " GUI.hwnd  ; 0x1109 is TVM_SETIMAGELIST
+            old:=TV_SetImageList(this._.IconList.SmallIL_ID)
+          } else if(Control.Type = "Tab") {
+            SendMessage, 0x1303, 0, this._.IconList.SmallIL_ID, % Control.ClassNN, % "ahk_id " GUI.hwnd  ; 0x1109 is TVM_SETIMAGELIST
+            if ErrorLevel
+              old:=ErrorLevel
+          } else {
+            msgbox "Error. Not implemented"
+          }
+        }
+        ;Destroy old image lists:
+        if old
+          IL_Destroy(old)
 			}
+      
 			if(FileExist(PathorhBitmap))
 			{
 				;Icon IDs are identical in both lists so it's enough to look it up in one list
@@ -664,7 +708,7 @@ Class CControl ;Never created directly
 				if(!Icon)
 				{
 					IID := IL_Add(this._.IconList.SmallIL_ID, PathorhBitmap, IconNumber, 1)
-					if(Control.Type = "ListView")
+					if(this._.IconList.LargeIL_ID)
 						IID := IL_Add(this._.IconList.LargeIL_ID, PathorhBitmap, IconNumber, 1)
 					this._.IconList.Insert(Icon := {Path : PathorhBitmap, IconNumber : IconNumber, ID : IID})
 				}
@@ -683,7 +727,7 @@ Class CControl ;Never created directly
 					if(PathOrhBitmap)
 					{
 						IID := DllCall("ImageList_ReplaceIcon", "Ptr", this._.IconList.SmallIL_ID, Int, -1, "Ptr", PathorhBitmap) + 1
-						if(Control.Type = "ListView")
+						if(this._.IconList.LargeIL_ID) ;;;SANCARN MODIFICATION REQUIRED?
 							IID := DllCall("ImageList_ReplaceIcon", "Ptr", this._.IconList.LargeIL_ID, Int, -1, "Ptr", PathorhBitmap) + 1
 					}
 					else

@@ -31,7 +31,7 @@ Class CTreeViewControl Extends CControl
 		; this._.Insert("Messages", {0x004E : "Notify"}) ;This control uses WM_NOTIFY with NM_SETFOCUS and NM_KILLFOCUS
 		this.Type := "TreeView"
 	}
-
+  
 	PostCreate()
 	{
 		Base.PostCreate()
@@ -111,7 +111,7 @@ Class CTreeViewControl Extends CControl
 		if(Value)
 			return Value
 	}
-
+  
 	__Set(Name, Params*)
 	{
 		if(!CGUI.GUIList[this.GUINum].IsDestroyed)
@@ -135,7 +135,11 @@ Class CTreeViewControl Extends CControl
 				TV_Modify(Value._.ID)
 				this.ProcessSubControlState(this._.PreviouslySelectedItem, this.SelectedItem)
 				this._.PreviouslySelectedItem := this.SelectedItem
-			}
+			} else if (Name = "LargeIcons") {
+        this._.ImageListManager.LargeIcons := (Value = true)
+      } else if (Name = "DefaultIcon") {
+        this._.ImageListManager.DefaultIcon := Value
+      }
 			else
 				Handled := false
 			if(!DetectHidden)
@@ -206,7 +210,7 @@ Class CTreeViewControl Extends CControl
 		if(Event.GUIEvent = "S")
 			this.PreviouslySelectedItem := SelectedItem
 	}
-
+  
 	/*
 	Class: CTreeViewControl.CItem
 	A tree node.
@@ -375,6 +379,7 @@ Class CTreeViewControl Extends CControl
 			;Delete old tree node
 			TV_Delete(OldID)
 		}
+    
 		/*
 		Function: SetIcon
 		Sets the icon of a tree node
@@ -393,6 +398,7 @@ Class CTreeViewControl Extends CControl
 			this._.Icon := Filename
 			this._.IconNumber := IconNumberOrTransparencyColor
 		}
+    
 		/*
 		Function: MaxIndex
 		Returns the number of child nodes.
