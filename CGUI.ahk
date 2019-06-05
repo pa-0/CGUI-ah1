@@ -1,5 +1,9 @@
 #NoEnv ;Leave this here if you don't want weird ListView icon behavior (and possibly other side effects)
-GoTo CGUI_END ;Assume no initialisation code - note: initialisation code should be in __new() method.
+
+;Assume no initialisation code - note: initialisation code should be in __new() method.
+;https://www.autohotkey.com/boards/viewtopic.php?f=76&t=65142&p=279708#p279708
+GoTo CGUI_END 
+
 
 ;GUI core code
 #include %A_LineFile%\..\CGUICore.ahk
