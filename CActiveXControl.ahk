@@ -108,6 +108,7 @@ Class CActiveXControl Extends CControl
 	Function: IsMemberOf
 	Checks if the ActiveX object supports a parameter. This does not check if it is read/write/call-able.
 	Thanks to jethrow, Lexikos and Sean for this function!
+  Sancarn2019: Updated version by Coco: https://www.autohotkey.com/boards/viewtopic.php?style=1&f=76&t=5176#p30610
 
 	Parameters:
 		name - the parameter to check for.
