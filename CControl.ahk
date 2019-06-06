@@ -626,18 +626,25 @@ Class CControl ;Never created directly
 			SmallIL_ID := this._.IconList.SmallIL_ID
 			LargeIL_ID := this._.IconList.LargeIL_ID
 			this._.IconList := {}
-			if(SmallIL_ID)
-			{
-				this._.IconList.SmallIL_ID := IL_Create(5, 5, 0)
-				old := LV_SetImageList(this._.IconList.SmallIL_ID, 0)
-				IL_Destroy(old)
-			}
-			if(LargeIL_ID)
-			{
-				this._.IconList.LargeIL_ID := IL_Create(5, 5, 1)
-				old := LV_SetImageList(this._.IconList.LargeIL_ID, this._.LargeIcons = 1)
-				IL_Destroy(old)
-			}
+      this._.IconList.SmallIL_ID := false
+      this._.IconList.LargeIL_ID := false
+      
+      if(Control.Type = "ListView"){
+        if(SmallIL_ID) {
+				  old := LV_SetImageList(this._.IconList.SmallIL_ID, 0)
+        }
+        if(LargeIL_ID){
+          old := LV_SetImageList(this._.IconList.LargeIL_ID, this._.LargeIcons = 1)
+        }
+      } else if (Control.Type = "TreeView"){
+        if(SmallIL_ID) {
+				  old := TV_SetImageList(this._.IconList.SmallIL_ID, 0)
+        }
+        if(LargeIL_ID){
+          old := TV_SetImageList(this._.IconList.LargeIL_ID, this._.LargeIcons = 1)
+        }
+      }
+      IL_Destroy(old)
 		}
 		SetIcon(ID, PathOrhBitmap, IconNumber, SetIcon = true)
 		{
@@ -649,10 +656,10 @@ Class CControl ;Never created directly
 			else if(Control.Type = "TreeView")
 				Gui, TreeView, % Control.ClassNN
 			
-      ;;;???
+      ;If neither a Small ID or a Large ID exists create it
       if(!this._.IconList.SmallIL_ID && !this._.IconList.LargeIL_ID)
 			{
-        ;;; MODIFIED BY SANCARN
+        ;Treat large and small icons differently
         if(this._.LargeIcons)
         {
           this._.IconList.LargeIL_ID := IL_Create(5, 5, 1)
