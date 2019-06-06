@@ -51,8 +51,11 @@ GoTo CGUI_END
 ;  * Ribbon
 ;  * ...?
 
+;Required to prevent label pointing to function.
 CGUI_END:
-_:=_ ;Required to prevent label pointing to label.
+{
+
+}
 
 
 ;;DEBUGGING:
