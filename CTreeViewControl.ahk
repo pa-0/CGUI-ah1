@@ -94,6 +94,8 @@ Class CTreeViewControl Extends CControl
 	{
 		if(Name = "Items")
 			Value := this._.Items
+    if(Name = "ImageListManager"
+      Value := this._.ImageListManager ;Not sure why this was private before...
 		else if(Name = "SelectedItem")
 		{
 			GUI := CGUI.GUIList[this.GUINum]
@@ -640,3 +642,97 @@ Class CTreeViewControl Extends CControl
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;
+;  TO BE IMPLEMENTED:::
+;
+;   #SingleInstance,Force
+;   #MaxHotkeysPerInterval 300
+;   
+;   
+;   Gui,+hwndmain
+;   Gui,Add,TreeView,w200 h200 hwndhwnd
+;   Gui,Add,TreeView,w200 h200 hwndhwnd1
+;   tv:=new treeview(hwnd)
+;   tv1:=new treeview(hwnd1)
+;   Gui,TreeView,SysTreeView321
+;   top:=TreeView.Add({Label:"Blue",Fore:0xff0000})
+;   Tv.Add({Label:"Purple",Back:0xff00ff,parent:top,Option:"Vis"})
+;   Tv.Add({Label:"Red",Fore:0x0000ff})
+;   Tv1.Add({Label:"Green",Fore:0x00ff00,back:0})
+;   hwnd:=Tv1.Add({Label:"Red",Fore:0,back:0xff})
+;   Gui,Show
+;   WinSet,Redraw,,ahk_id%main%
+;   Sleep,1000
+;   TV_Modify(hwnd,"","Pink")
+;   Tv1.modify({hwnd:hwnd,fore:0xff00ff,back:0})
+;   global size := 10
+;   return
+;   GuiEscape:
+;   ExitApp
+;   return
+;   class treeview{
+;   	static list:=[]
+;   	__New(hwnd){
+;   		this.list[hwnd]:=this
+;   		OnMessage(0x4e,"WM_NOTIFY")
+;   		this.hwnd:=hwnd
+;   	}
+;   	add(info){
+;   		Gui,TreeView,% this.hwnd
+;   		hwnd:=TV_Add(info.Label,info.parent,info.option)
+;   		if info.fore!=""
+;   			this.control[hwnd,"fore"]:=info.fore
+;   		if info.back!=""
+;   			this.control[hwnd,"back"]:=info.back
+;   		return hwnd
+;   	}
+;   	modify(info){
+;   		this.control[info.hwnd,"fore"]:=info.fore
+;   		this.control[info.hwnd,"back"]:=info.back
+;   		WinSet,Redraw,,A
+;   	}
+;   }
+;   WM_NOTIFY(Param*){
+;   	control:=
+;   	if (this:=treeview.list[NumGet(Param.2)])&&(NumGet(Param.2,2*A_PtrSize,"int")=-12){
+;   		stage:=NumGet(Param.2,3*A_PtrSize,"uint")
+;   		if (stage=1)
+;   			return 0x20 ;sets CDRF_NOTIFYITEMDRAW
+;   		if (stage=0x10001&&info:=this.control[numget(Param.2,A_PtrSize=4?9*A_PtrSize:7*A_PtrSize,"uint")]){ ;NM_CUSTOMDRAW && Control is in the list
+;   			if info.fore!=""
+;   				NumPut(info.fore,Param.2,A_PtrSize=4?12*A_PtrSize:10*A_PtrSize,"int") ;sets the foreground
+;   			if info.back!=""
+;   				NumPut(info.back,Param.2,A_PtrSize=4?13*A_PtrSize:10.5*A_PtrSize,"int") ;sets the background
+;   		}
+;   	}
+;   }
+;   
+;   #if WinExist("A")=main
+;   ^wheelup::
+;     size += 1
+;     Gui, Font, s%size% cRed Bold, Verdana
+;     GuiControl, Font, % tv.hwnd
+;   return
+;   ^wheeldown::
+;     size -= 1
+;     Gui, Font, s%size% cRed Bold, Verdana
+;     GuiControl, Font, % tv.hwnd
+;   return
+;   ^r::
+;     reload
+;   return
