@@ -3,6 +3,9 @@
 ## Contributors
 
 * [ChrisS85](https://github.com/ChrisS85)
+* [Anthony Zhang](https://github.com/Uberi)
+* [Joe Taber](https://github.com/infogulch)
+* [Maul.esel](https://github.com/maul-esel)
 * [Oliver Lipkau](https://github.com/lipkau)
 * [Sancarn](https://github.com/sancarn)
 
@@ -28,8 +31,6 @@ The library comes fresh with a suite of controls for use within your own GUIs:
 * CHotkeyControl
 * CActiveXControl
 * CPictureControl
-
-_CGUI was originally developed by ChrisS85 and can be found [here](https://github.com/ChrisS85/CGUI). Unfortunately this was library was discontinued. This fork is an attempt to continue collaborated development on this._
 
 ## Basic example
 
