@@ -94,7 +94,7 @@ Class CTreeViewControl Extends CControl
 	{
 		if(Name = "Items")
 			Value := this._.Items
-    if(Name = "ImageListManager"
+    if(Name = "ImageListManager")
       Value := this._.ImageListManager ;Not sure why this was private before...
 		else if(Name = "SelectedItem")
 		{
